@@ -190,6 +190,48 @@ public class ProductDAO {
       
       return list;
    }
+   
+   // 카테고리별 상품 리스트 가져오기
+   public ArrayList<ProductDTO> getProdByCategory(String code){
+	   ArrayList<ProductDTO> list = new ArrayList<ProductDTO>();
+	   
+	   String sql = "select * from product where pCategory_fk = ?";
+	   conn = getConnection();
+	   
+	   try {         
+		   ps = conn.prepareStatement(sql);
+		   ps.setString(1, code);
+		   rs = ps.executeQuery();
+		   
+		   while(rs.next()) {
+			   int pNum = rs.getInt("pNum");
+			   String pName = rs.getString("pName");
+			   String pCategory_fk = rs.getString("pCategory_fk");
+			   String pCompany = rs.getString("pCompany");
+			   String pImage = rs.getString("pImage");
+			   int pQty = rs.getInt("pQty");
+			   int price = rs.getInt("price");
+			   String pSpec = rs.getString("pSpec");
+			   String pContent = rs.getString("pContent");
+			   int pPoint = rs.getInt("pPoint");
+			   String pInputDate = rs.getString("pInputDate");
+			   
+			   
+			   // dto로 묶기
+			   ProductDTO dto = new ProductDTO(pNum, pName, pCategory_fk, pCompany, pImage, pQty, price, pSpec, pContent, pPoint, pInputDate, 0, 0);
+			   list.add(dto);
+		   }
+		   // 카테고리별로 리스트에 담음.(카테고리별 상품을 해쉬맵에 추가)
+		   map.put(code, list);
+		   
+	   } catch (SQLException e) {         
+		   e.printStackTrace();
+	   } finally {
+		   dbClose();
+	   }
+	   
+	   return list; 
+   }
 ////   
 //   관리자 정보 가져오기
    public AdminDTO getAdminInfo(String id) {

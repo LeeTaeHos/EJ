@@ -31,9 +31,10 @@ li>a {
 		for(CategoryDTO cDto:cDtos){
 			String catName = cDto.getCatName();
 			String code = cDto.getCode();
-		
+			pageContext.setAttribute("code", code);
+			pageContext.setAttribute("catName", catName);
 	%>
-		<li><a href=""><%=catName%></a></li>
+		<li><a href="categoryList.do?code=${code}&catName=${catName}">${catName}</a></li>
 		<%}// for문
 	}else{//cDtos == null && cDtos.size() == 0
 			out.print("<li>카테고리 없음</li>");
