@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>day14_shop</display-name>
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/user/u_temp.jsp</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>FrontController</servlet-name>
+		<servlet-class>frontController.FrontController</servlet-class>
+		
+		<!-- 서블릿 생성 후 init()을 호출할 때 전달되는 파라미터를 설정 -->
+		
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/shop.properties</param-value>
+		</init-param>
+		<!-- 해당 서블릿의 요청이 없어도 미리 톰켓서버에서 인식되도록 하겠다. -->
+	<load-on-startup>1</load-on-startup>		
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>FrontController</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+
+</web-app>
