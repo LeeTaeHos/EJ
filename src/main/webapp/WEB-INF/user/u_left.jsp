@@ -44,7 +44,7 @@ li>a {
 			pageContext.setAttribute("ps", ps);
 		%>
 			<li>
-				<a href="">${ps.getValue()}상품</a>
+				<a href="specList.do?pSpec=${ps.name()}">${ps.getValue()}상품</a>
 			</li>
 		<%
 		}// for문			
