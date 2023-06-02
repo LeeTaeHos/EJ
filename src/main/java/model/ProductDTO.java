@@ -91,6 +91,9 @@ public class ProductDTO {
 
 	public void setpQty(int pQty) {
 		this.pQty = pQty;
+		
+		totPrice = this.pQty*price;
+		totPoint = this.pQty*pPoint;
 	}
 
 	public int getPrice() {

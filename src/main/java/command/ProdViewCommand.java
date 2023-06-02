@@ -24,8 +24,12 @@ public class ProdViewCommand implements ShopCommand {
 		
 		// ProdSpec.valueOf(pSpec) --> HIT, NEW, RECOMMEND 객체 가져오기
 		// specValue --> 인기, 최신, 추천
-		String specValue = ProdSpec.valueOf(pSpec).getValue();
-		
+		String specValue =null;
+		if(!pSpec.equals("none")) {
+		specValue = ProdSpec.valueOf(pSpec).getValue();
+		}else {
+			specValue ="일반";
+		}
 		ProductDAO pDao = ProductDAO.getInstance();
 		ProductDTO pDto = pDao.getproduct(pNum);
 		

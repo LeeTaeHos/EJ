@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.CartDAO;
 import model.MemberDAO;
 import model.MemberDTO;
 
@@ -39,6 +40,10 @@ public class UserLoginOkCommand implements ShopCommand {
 			session.setAttribute("name", name);
 			session.setAttribute("isLogin", "yes");
 			session.setAttribute("mode", "user");
+			
+			// 장바구니 생성
+			CartDAO shopCart = new CartDAO();
+			session.setAttribute("shopCart", shopCart);
 			
 		}
 		String viewPage = null;

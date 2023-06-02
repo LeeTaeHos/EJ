@@ -222,7 +222,7 @@ public class ProductDAO {
 			   list.add(dto);
 		   }
 		   // 카테고리별로 리스트에 담음.(카테고리별 상품을 해쉬맵에 추가)
-		   map.put(code, list);
+//		   map.put(code, list);
 		   
 	   } catch (SQLException e) {         
 		   e.printStackTrace();
