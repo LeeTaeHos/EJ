@@ -43,7 +43,7 @@
                <td>${dto.pName}</td>
                <td>
                <form action="cartModify.do" method="post">
-               		<input type="hidden" name="pNum" value="${dto.pNum}"/>
+                  <input type="hidden" name="pNum" value="${dto.pNum}"/>
                   <input type="text" size="3" name="pQty" value="${dto.pQty}"/>개<br/>
                   <input type="submit" class="btn btn-sm btn-secondary mt-3" value="수정"/>
                </form>
@@ -57,7 +57,15 @@
                   <fmt:formatNumber value="${dto.totPoint}"/>포인트
                </td>
                <td>
-                  <a href="cartDelete.do?pNum=${dto.pNum}" class="btn btn-sm btn-danger">삭제</a>
+                  <%--
+                     pNum 파라미터 노출 
+                     <a href="cartDelete.do?pNum=${dto.pNum}" class="btn btn-sm btn-danger">삭제</a> 
+                  --%>
+                  <form action="cartDelete.do" method="post">
+                     <input type="hidden" name="pNum" value="${dto.pNum}"/>
+                     <input type="submit" class="btn btn-sm btn-danger" value="삭제"/>
+                     <%-- <a href="cartDelete.do?pNum=${dto.pNum}" class="btn btn-sm btn-danger">삭제</a> --%>
+                  </form>
                </td>
             </tr>
             <c:set var="cartTotPrice" value="${cartTotPrice + dto.totPrice}"/>
@@ -81,7 +89,7 @@
 <script>
    function pdDel(pNum, pImage){
       let isDel = confirm("삭제 하시겠습니까?");
-      if(isDel) location.href="prodDelete.do?pNum="+pNum+"&pImage="+pImage;
+      if(isDel) ;
    }
 </script>
 

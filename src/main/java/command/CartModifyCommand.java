@@ -1,4 +1,4 @@
- package command;
+package command;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,20 +27,20 @@ public class CartModifyCommand implements ShopCommand{
       HttpSession session = request.getSession();
       CartDAO shopCart = (CartDAO)session.getAttribute("shopCart");
       
-      String pNum = request.getParameter("pNum");
-      String pQty = request.getParameter("pQty");
+      String pNum = null, pQty = null;
+      if(request.getMethod().equals("POST")) {
+         pNum = request.getParameter("pNum");      
+         pQty = request.getParameter("pQty");      
+      }
       
       if(pNum == null || pNum.trim().equals("") || pQty==null || pQty.trim().equals("")) {
-    	  request.setAttribute("msg", "잘못된 경로입니다");
-    	  return "user/u_temp.jsp?pg=u_main";
+         request.setAttribute("msg", "잘못된 경로입니다");
+         return "user/u_temp.jsp?pg=u_main";
       }
       
       shopCart.modifyProduct(pNum, pQty);
-
+      
       return "cartList.do";
-
-   
-   
    }
 
 }
