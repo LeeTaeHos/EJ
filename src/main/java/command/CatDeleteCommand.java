@@ -18,29 +18,45 @@ import model.CartDAO;
 import model.CategoryDAO;
 import model.ProductDAO;
 
-public class CatDeleteCommand implements ShopCommand{
+public class CatDeleteCommand implements ShopCommand {
 
-   @Override
-   public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      request.setCharacterEncoding("utf-8");
-      
-      HttpSession session = request.getSession();
-      CartDAO shopCart = (CartDAO)session.getAttribute("shopCart");
-      
-      String pNum = null;
-      
-      if(request.getMethod().equals("POST")) {
-         pNum = request.getParameter("pNum");      
-      }
-      
-      if(pNum == null || pNum.trim().equals("")) {
-         request.setAttribute("msg", "잘못된 경로 입니다");
-         return "user/u_temp.jsp?pg=u_main";
-      }
-      
-      shopCart.deleteProduct(pNum);
-      
-      return "cartList.do";
-   }
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 
+		HttpSession session = request.getSession();
+		CartDAO shopCart = (CartDAO) session.getAttribute("shopCart");
+
+		String pNum = null;
+
+			// "13/14/15"
+		String pNums = request.getParameter("delProdNums");
+		
+		if(pNums == null) {
+		if (request.getMethod().equals("POST")) {
+			pNum = request.getParameter("pNum");
+		}
+
+		if (pNum == null || pNum.trim().equals("")) {
+			request.setAttribute("msg", "잘못된 경로 입니다");
+			return "user/u_temp.jsp?pg=u_main";
+		}
+
+		shopCart.deleteProduct(pNum);
+
+		return "cartList.do";
+	}
+
+	String[] pNumArr = pNums.split("/");
+
+	if(pNumArr.length>0)
+	{
+		for (int i = 0; i < pNumArr.length; i++) {
+			shopCart.deleteProduct(pNumArr[i]);
+		}
+	}
+
+	return"checkout.do";
+	}
 }

@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.oreilly.servlet.MultipartRequest;
+
 public class MemberDAO {
 	public static final int MEMBER_JOIN_SUCCESS = 1;
 	public static final int MEMBER_JOIN_FAIL = 0;
@@ -213,31 +215,76 @@ public class MemberDAO {
 		}
 		return dto;
 	}
-//
-//	// 회원 수정
-//	public int update(String bid, String bwriter, String btitle, String bcontent) {
-//		String sql = "Update board set bwriter=?, btitle=?, bcontent=? where bid=?";
-//		getConnection();
-//		int cnt = -1;
-//
-//		try {
-//			ps = conn.prepareStatement(sql);
-//			ps.setString(1, bwriter);
-//			ps.setString(2, btitle);
-//			ps.setString(3, bcontent);
-//			ps.setString(4, bid);
-//
-//			cnt = ps.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			dbClose();
-//		}
-//
-//		return cnt;
-//	}
-//
+////	유저 정보 가져오기
+	public ArrayList<MemberDTO> getUserInfo() {
+		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
+		String sql = "select * from shopMember ";
+		conn = getConnection();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String pw = rs.getString("pw");
+				String name = rs.getString("name");
+				String tel = rs.getString("tel");
+				String email = rs.getString("email");
+				String addr = rs.getString("addr");
+				Timestamp rdate = rs.getTimestamp("rdate");
+		            
+		            // dto로 묶기
+		            MemberDTO dto = new MemberDTO(id, pw, name, tel, email, addr, rdate);
+		            list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dbClose();
+		}
+		return list;
+	}
+
+	// 회원 수정
+public MemberDTO MemberUpdate(MultipartRequest mr) {
+	   
+	   String id = mr.getParameter("id");
+    
+    String pw = mr.getParameter("pw");
+    String name = mr.getParameter("name");
+    String tel = mr.getParameter("tel");
+    String email = mr.getParameter("email");
+    String addr = mr.getParameter("addr");
+    
+   String sql="UPDATE shopMember SET pw=?, name=?, tel=?,email=?,addr=? "
+         + "WHERE id = ?";
+   
+   conn = getConnection();
+  int n = -1;
+   
+   try {
+      ps = conn.prepareStatement(sql);
+      ps.setString(1, pw);
+      ps.setString(2, name);
+      ps.setString(3, tel);
+      ps.setString(4, email);
+      ps.setString(5, addr);
+      ps.setString(6, id);
+      
+     n = ps.executeUpdate();
+      
+   } catch (SQLException e) {
+      e.printStackTrace();
+   } finally {
+      dbClose();
+   }
+   return n;
+   
+//   return n;
+}
+
+
 //	// 게시글 삭제
 //	public int delete(String bid) {
 //		String sql = "delete from board where bid = ?";
@@ -364,4 +411,5 @@ public class MemberDAO {
 //		}
 //	}
 //
+
 }

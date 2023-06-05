@@ -81,7 +81,7 @@
       총 포인트 : <fmt:formatNumber value="${cartTotPoint}"/> 포인트 
    </div>
    <div class="text-center">
-      <a href="" class="btn btn-primary me-2">구매하기</a>
+      <a href="checkout.do" class="btn btn-primary me-2">구매하기</a>
       <a href="${pageContext.request.contextPath}" class="btn btn-outline-primary me-2">계속 쇼핑하기</a>
    </div>
    

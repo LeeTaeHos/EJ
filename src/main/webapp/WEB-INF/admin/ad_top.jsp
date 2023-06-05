@@ -38,6 +38,9 @@
         <li class="nav-item">
           <a class="nav-link" href="prodList.do">상품리스트</a>
         </li>  
+        <li class="nav-item">
+          <a class="nav-link" href="userList.do">회원관리</a>
+        </li>  
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button"
 							data-bs-toggle="dropdown">Dropdown</a>

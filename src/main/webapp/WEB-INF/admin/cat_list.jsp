@@ -27,6 +27,7 @@
 						<td>${dto.catNum}</td>
 						<td>${dto.code}</td>
 						<td>${dto.catName}</td>
+						<td><a href="catUpdate.do?catNum=${dto.catNum}" class="btn btn-outline-info btn-sm">수정</a></td>
 						<td><a href="catDelete.do?catNum=${dto.catNum}" class="btn btn-outline-danger btn-sm">삭제</a></td>
 					</tr>
 				</c:forEach>

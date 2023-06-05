@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.oreilly.servlet.MultipartRequest;
+
 public class CategoryDAO {
 	
 	private Connection conn;
@@ -120,6 +122,68 @@ public class CategoryDAO {
 		}
 		return list;
 	}
+	
+	   // 카테고리 정보 가져오기
+	   public CategoryDTO getCategory(String catNum) {
+
+	      CategoryDTO dto = null;
+	      String sql = "SELECT * FROM category WHERE cat_num = ?";
+	      getConnection();
+
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setString(1, catNum);
+	         rs = ps.executeQuery();
+
+	         if (rs.next()) {
+	            int cNum = rs.getInt("cat_num");
+	            String cCOde = rs.getString("code");
+	            String cName = rs.getString("cat_name");
+	            
+
+	            // dto 묶기
+	            dto = new CategoryDTO(cNum, cCOde, cName);
+	            
+	         }
+
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         dbClose();
+	      }
+
+	      return dto;
+	   }
+	   
+		// 카테고리 수정
+	   public int updateCategory(MultipartRequest mr) {      
+		      String catNum = mr.getParameter("cat_num");
+		      String code = mr.getParameter("code");
+		      String catName = mr.getParameter("cat_name");
+		      
+		      String sql = "UPDATE category SET "
+		            + "code=?, cat_name=? "
+		            + "WHERE cat_num=?";
+		      getConnection();
+		      int n = -1;
+
+		      try {
+		         ps = conn.prepareStatement(sql);
+		         ps.setString(1, code);
+		         ps.setString(2, catName);
+		         ps.setString(3, catNum);
+
+
+		         n = ps.executeUpdate();
+		      } catch (SQLException e) {
+
+		         e.printStackTrace();
+		      } finally {
+		         dbClose();
+		      }
+
+		      return n;
+		   }
 //
 ////	관리자 정보 가져오기
 //	public AdminDTO getAdminInfo(String id) {
